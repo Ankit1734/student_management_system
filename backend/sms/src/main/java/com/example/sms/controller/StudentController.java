@@ -17,8 +17,8 @@ public class StudentController {
 
         return new Student(
                 1,
-                "Tushar",
-                "MCA"
+                "Ankit",
+                "BE"
         );
     }
 }
