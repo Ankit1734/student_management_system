@@ -8,17 +8,31 @@ function App(){
     
     const getStudents = async () => {
         
-            const response = await fetch('http://localhost:8080/student');
+            const response = await fetch('http://localhost:8080/students');
             const data = await response.json();
             setStudents(data);
         
     };
+    const getBcaStudents = async () => {
+        
+        const response = await fetch('http://localhost:8080/students/bca');
+        const data = await response.json();
+        setStudents(data);
+    
+};
+    
 
     return (
         <div>
             <button onClick={getStudents}>
                 fetch Students
             </button>
+
+            <button onClick={getBcaStudents}>
+                Show BCA students
+            </button>
+
+            
             <ul>
             {
                 students.map(student => (
