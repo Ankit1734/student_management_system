@@ -1,12 +1,13 @@
 package com.example.sms.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,21 +24,21 @@ public class StudentController {
     private StudentService service;
 
 
-    @GetMapping
-    public ArrayList<Student> getStudent() {
-      ArrayList<Student> students = new ArrayList<>();
-       students.add(new Student(1, "Ankit", "BE"));
-       students.add(new Student(2, "Harkirat", "ME"));
-       students.add(new Student(3, "Aman", "MCA"));
-       students.add(new Student(4,"Tushar","BCA"));
-       students.add(new Student(5,"Aman","MCA"));
-       students.add(new Student(6,"Priya","BCA"));
+  //  @GetMapping
+   // public ArrayList<Student> getStudent() {
+     // ArrayList<Student> students = new ArrayList<>();
+      // students.add(new Student(1, "Ankit", "BE"));
+       //students.add(new Student(2, "Harkirat", "ME"));
+       //students.add(new Student(3, "Aman", "MCA"));
+       //students.add(new Student(4,"Tushar","BCA"));
+       //students.add(new Student(5,"Aman","MCA"));
+       //students.add(new Student(6,"Priya","BCA"));
 
-       return students;
-    }
+      // return students;
+    //}
     @GetMapping("/mca")
     public List<Student> getMCAStudents(){
-        return getStudent()
+        return getStudents()
         .stream()
         .filter(student -> "MCA".equals(student.getCourse()))
         .collect(Collectors.toList());
@@ -50,4 +51,12 @@ public class StudentController {
     public String getMessage() {
         return service.getStudentInfo();
     }
+    @GetMapping
+    public List<Student> getStudents(){
+        return service.getAllStudents();
+    }
+    @PostMapping
+    public Student addStudent(@RequestBody Student student) {
+    return service.saveStudent(student);
+}
 }
