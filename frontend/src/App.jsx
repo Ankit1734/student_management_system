@@ -30,6 +30,12 @@ function App(){
     
         alert("Login Success");
     }
+    const loginWithGoogle = () => {
+
+        window.location.href =
+        "http://localhost:8080/oauth2/authorization/google-success";
+    
+    };
     
     const getStudents = async () => {
         
@@ -136,6 +142,13 @@ function App(){
     >
         Login
     </button>
+
+    <h1>Student Management System</h1>
+
+    <button onClick={loginWithGoogle}>
+        Login with Google
+    </button>
+
     
         </div>
     )

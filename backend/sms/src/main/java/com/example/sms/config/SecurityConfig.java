@@ -29,7 +29,15 @@ public class SecurityConfig {
                 .addFilterBefore(
                         jwtFilter,
                         UsernamePasswordAuthenticationFilter.class
-                );
+                )
+                .oauth2Login(
+                    oauth -> oauth
+                            .defaultSuccessUrl(
+                                    "/auth/google-success",
+                                    true
+                            )
+            );
+                
             
                 
 
