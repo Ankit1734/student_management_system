@@ -1,13 +1,15 @@
 package com.example.sms.service;
 
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+import java.util.Date;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
-import java.util.Date;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtService {
@@ -47,7 +49,7 @@ public class JwtService {
         try {
 
             Jwts.parser()
-                    .verifyWith(getKey())
+                    .verifyWith(Keys.hmacShaKeyFor(secret.getBytes()))
                     .build()
                     .parseSignedClaims(token);
 
@@ -59,4 +61,5 @@ public class JwtService {
 
         }
     }
+
 }
