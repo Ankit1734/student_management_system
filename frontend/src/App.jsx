@@ -1,7 +1,13 @@
 import { useState } from "react";
+import { useEffect } from "react";
+import {useContext} from "react";
+import {AuthContext} from "./context/AuthContext";
+import StudentCard from "./components/StudentCard";
+import StudentForm from "./components/StudentForm";
 
 function App(){
-
+    
+/*
     //{"id":1,"name":"John Doe","course":"Computer Science"}
 
     const [students, setStudents] = useState([]);
@@ -12,6 +18,10 @@ function App(){
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const {user, setUser} = useContext(AuthContext);
+
+    const [search, setSearch] = useState("");
 
     const login  = async () => {
         const response = await fetch('http://localhost:8080/auth/login',
@@ -77,9 +87,24 @@ function App(){
             }
         }
     }
+  
+    
 
     return (
-        <div>
+        <div 
+        style={{
+            padding:"20px"
+        }}
+        >
+            <h1>
+		    Welcome { user ? user : "Guest" }
+		</h1>
+		
+		<button onClick={() => setUser("Admin")}>
+		    Login
+		</button>
+
+
             <button onClick={getStudents}>
                 fetch Students
             </button>
@@ -149,8 +174,85 @@ function App(){
         Login with Google
     </button>
 
+    <h1>Student Management System</h1>
+
+    <StudentForm refreshStudents={fetchStudents}/>
+
+    <hr/>
+
+    {
+
+        students.map((student) => (
+
+            <StudentCard
+            key={student.id}
+            name={student.name}
+            course={student.course}
+            email={student.email}
+            />
+        )
+        )
+    }
+
+
     
         </div>
-    )
+    ) */
+        const [students,setStudents] = useState([]);
+        const fetchStudents = async () => {
+    
+            const response = await fetch("http://localhost:8080/students");
+            const data = await response.json();
+        
+            setStudents(data);
+            };
+        
+            if (!response.ok) {
+                alert("Unauthorized!");
+                return;
+            }
+        
+            const data = await response.json();
+            setStudents(data);
+        };
+        useEffect(() => {
+    
+        fetchStudents();
+    
+        }, []);
+    
+        return (
+    
+        <div
+            style={{
+            padding:"20px"
+            }}
+        >
+    
+            <h1>Student Management System</h1>
+    
+            <StudentForm refreshStudents={fetchStudents}/>
+    
+            <hr/>
+    
+            {
+    
+            students.map((student) => (
+    
+                <StudentCard
+                    key={student.id}
+                    name={student.name}
+                    course={student.course}
+                    email={student.email}
+                    
+                />
+                )
+            )
+            }
+    
+        </div>
+    
+        );
+    
 }
 export default App;
